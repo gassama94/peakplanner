@@ -46,7 +46,9 @@ function App() {
   return (
     <main className='h-screen my-8 flex gap-8'>
 
-    <ProjectsSidebar onStartAddTask={handleStartAddTask} />
+    <ProjectsSidebar 
+    onStartAddTask={handleStartAddTask}
+    Tasks={tasksState.Tasks} />
     {content}
     </main>
   );

@@ -10,7 +10,6 @@ function App() {
     Tasks: []
   })
 
-
   function handleStartAddTask(){
     setTasksState(prevState => {
       return {
@@ -21,10 +20,25 @@ function App() {
     });
   }
 
+  function handleAddTask(taskData){
+    setTasksState(prevState => {
+      const newTask = {
+        ...taskData,
+        id: Math.random()
+      }
+      return {
+        ...prevState,
+        Tasks: [...prevState.Tasks, newTask]
+      }
+    })
+  }
+
+  console.log(tasksState);
+
   let content;
 
   if (tasksState.selectedTasksId === null) {
-    content = <NewProject/>
+    content = <NewProject onAdd={handleAddTask}/>
   } else if (tasksState.selectedTasksId === undefined) {
     content = <NoProjectSelected onStartAddTask={handleStartAddTask} />;
   }

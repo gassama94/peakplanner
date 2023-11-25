@@ -22,18 +22,19 @@ function App() {
 
   function handleAddTask(taskData){
     setTasksState(prevState => {
+      const taskId = Math.random();
       const newTask = {
         ...taskData,
-        id: Math.random()
+        id: taskId,
       }
       return {
         ...prevState,
+        selectedTasksId: undefined,
         Tasks: [...prevState.Tasks, newTask]
       }
     })
   }
 
-  console.log(tasksState);
 
   let content;
 

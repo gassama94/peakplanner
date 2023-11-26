@@ -5,10 +5,13 @@ export default function NewTask( {onAdd}) {
   const [enteredTask, setEnteredTask] = useState('');
 
   function handleChange(event){
-    setEnteredTask(event.target.value)
+    setEnteredTask(event.target.value);
   }
 
   function handleClick(event){
+    if (enteredTask.trim() === '') {
+      return;
+    }
     onAdd(enteredTask);
     setEnteredTask('');
   }
@@ -23,7 +26,7 @@ export default function NewTask( {onAdd}) {
       />
       <button
        onClick={handleClick}
-       className="text-stone-700 hover:text-stone-900">Add Task.</button>
+       className="text-stone-700 hover:text-stone-900">Add Task</button>
       <ul></ul>
     </div>
   )

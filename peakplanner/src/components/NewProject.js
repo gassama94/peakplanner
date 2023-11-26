@@ -1,5 +1,5 @@
 import { useRef } from "react"
-import Input from "./Input"
+import Input from "./Input.js"
 import Modal from "./Modal.js"
 
 export default function NewProject({onAdd, onCancel} ){
@@ -7,12 +7,12 @@ export default function NewProject({onAdd, onCancel} ){
 
   const title = useRef();
   const description  = useRef();
-  const dueDATE = useRef();
+  const dueDate = useRef();
 
   function handleSave(){
     const enteredTitle = title.current.value;
     const enteredDescription = description.current.value;
-    const enteredDueDate = dueDATE.current.value;
+    const enteredDueDate = dueDate.current.value;
 
 
     // validation....
@@ -25,7 +25,7 @@ export default function NewProject({onAdd, onCancel} ){
     onAdd({
       title: enteredTitle,
       description: enteredDescription,
-      dueDATE: enteredDueDate
+      dueDate: enteredDueDate
 
     });
 
@@ -55,7 +55,7 @@ export default function NewProject({onAdd, onCancel} ){
     <div>
       <Input type="text" ref={title}  label="Title" />
       <Input ref={description}  label="Description"  textarea />
-      <Input type="date" ref={dueDATE}  label="Due Date" />
+      <Input type="date" ref={dueDate}  label="Due Date" />
   </div>
   </div>
         </>

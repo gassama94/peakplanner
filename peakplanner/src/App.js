@@ -20,6 +20,18 @@ function App() {
     });
   }
 
+
+function handleCancelAddTask(){
+  setTasksState(prevState => {
+    return {
+      ...prevState,
+      selectedTasksId: undefined,
+
+    };
+  });
+
+}
+
   function handleAddTask(taskData){
     setTasksState(prevState => {
       const taskId = Math.random();
@@ -39,7 +51,7 @@ function App() {
   let content;
 
   if (tasksState.selectedTasksId === null) {
-    content = <NewProject onAdd={handleAddTask}/>
+    content = <NewProject onAdd={handleAddTask} onCancel={handleCancelAddTask}/>
   } else if (tasksState.selectedTasksId === undefined) {
     content = <NoProjectSelected onStartAddTask={handleStartAddTask} />;
   }

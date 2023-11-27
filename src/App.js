@@ -4,11 +4,12 @@ import NavBar from './components/NavBar.js';
 import SignInForm from './pages/auth/SignInForm';
 import ProjectManagement from './components/ProjectManagement';
 import NoProjectSelected from './components/NoProjectSelected.js';
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect, useLocation} from "react-router-dom";
 import { BrowserRouter as Router } from 'react-router-dom';
 import ProjectsSidebar from './components/ProjectsSidebar.js';
 import NewProject from './components/NewProject';
 import SelectedProject from './components/SelectedProject.js';
+import SignUpForm from './pages/auth/SignUpForm';
 
 function App() {
   const [projectsState, setProjectsState] = useState({
@@ -31,6 +32,19 @@ const handleLogout = () => {
     setIsAuthenticated(false);
 };
 
+const [showSignUp, setShowSignUp] = useState(false);
+
+  const handleShowSignUp = () => {
+    setShowSignUp(true);
+  };
+
+  const handleHideSignUp = () => {
+    setShowSignUp(false);
+  };
+
+
+  const location = useLocation(); // Get the current location
+  const isAuthPage = location.pathname === '/signin' || location.pathname === '/signup';
 
 
   function handleAddTask(text){
@@ -142,33 +156,53 @@ function handleCancelAddProject(){
     content = <NoProjectSelected onStartAddProject={handleStartAddProject} />;
   }
   return (
+    
+    
 
 
 <div>
-  <div>
 
-<Router>
-      <NavBar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+
+  <Router>
+      <NavBar isAuthenticated={isAuthenticated} onLogout={handleLogout} onSignUpClick={handleShowSignUp} />
       <Switch>
+        {/* Home Page Route */}
         <Route exact path="/">
-          {isAuthenticated ? <Redirect to="/projects" /> : <Redirect to="/signin" />}
-        </Route>
-        <Route path="/signin">
-          {isAuthenticated ? <Redirect to="/projects" /> : <SignInForm onLogin={handleLogin} />}
-        </Route>
-        <Route path="/projects">
           {isAuthenticated ? <ProjectManagement /> : <Redirect to="/signin" />}
         </Route>
+
+        {/* Sign In Route */}
+        <Route path="/signin">
+          {isAuthenticated ? <Redirect to="/" /> : (
+            <>
+              <h1>Sign In</h1>
+              <SignInForm onLogin={handleLogin} />
+            </>
+          )}
+        </Route>
+
+        {/* Sign Up Route */}
+        <Route path="/signup">
+          {isAuthenticated ? <Redirect to="/" /> : (
+            <>
+              <h1>Sign Up</h1>
+              <SignUpForm onBack={handleHideSignUp}/>
+            </>
+          )}
+        </Route>
+
         {/* ... other routes ... */}
       </Switch>
     </Router>
-  </div>
 
-    <main className='h-screen my-8 flex gap-8'>
+
+
 
 {/* */}
 
-    <ProjectsSidebar 
+{!isAuthPage && (
+    <main className='h-screen my-8 flex gap-8'>
+  <ProjectsSidebar 
     onStartAddProject={handleStartAddProject}
     projects={projectsState.projects}
     onSelectProject={handleSelectProject}
@@ -176,9 +210,8 @@ function handleCancelAddProject(){
     />
     {content}
     </main>
-      </div>
-      
-      
+)}
+      </div>   
   );
 }
 

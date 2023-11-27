@@ -1,4 +1,8 @@
-import { UserCircleIcon } from '@heroicons/react/24/solid'
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+
+
 
 export default function SignUpForm() {
   const [signUpData, setSignUpData] = useState({
@@ -8,7 +12,7 @@ export default function SignUpForm() {
   });
   const { username, password1, password2 } = signUpData;
 
-  const [errors, setErrors] = useState({});
+  // const [errors, setErrors] = useState({});
 
   const history = useHistory();
 
@@ -25,17 +29,20 @@ export default function SignUpForm() {
       await axios.post("/dj-rest-auth/registration/", signUpData);
       history.push("/signin");
     } catch (err) {
-      setErrors(err.response?.data);
+      //setErrors(err.response?.data);
     }
   };
   return (
-    <form>
+    <div className="flex justify-center items-center h-screen max-xl">
+    <form 
+    className="w-full max-w-lg bg-deep-blue rounded-md justify-center flex"
+    onSubmit={handleSubmit}>
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             {/* Username Field */}
             <div className="sm:col-span-4">
-              <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-200">
                 Username
               </label>
               <div className="mt-2">
@@ -46,13 +53,15 @@ export default function SignUpForm() {
                   autoComplete="username"
                   className="block w-full flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   placeholder="janesmith"
+                  value={username}
+                  onChange={handleChange}
                 />
               </div>
             </div>
 
             {/* Password Field */}
             <div className="sm:col-span-4">
-              <label htmlFor="password1" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="password1" className="block text-sm font-medium leading-6 text-gray-200">
                 Password
               </label>
               <div className="mt-2">
@@ -63,13 +72,15 @@ export default function SignUpForm() {
                   autoComplete="new-password"
                   className="block w-full flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   placeholder="••••••••"
+                  value={password1}
+                  onChange={handleChange}
                 />
               </div>
             </div>
 
             {/* Confirm Password Field */}
             <div className="sm:col-span-4">
-              <label htmlFor="password2" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="password2" className="block text-sm font-medium leading-6 text-gray-200">
                 Confirm Password
               </label>
               <div className="mt-2">
@@ -80,6 +91,8 @@ export default function SignUpForm() {
                   autoComplete="new-password"
                   className="block w-full flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   placeholder="••••••••"
+                  value={password2}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -96,5 +109,6 @@ export default function SignUpForm() {
         </button>
       </div>
     </form>
+    </div>
   );
 }

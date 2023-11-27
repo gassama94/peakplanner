@@ -6,7 +6,7 @@ import { faSignInAlt, faHome, faSignOutAlt, faUserPlus } from '@fortawesome/free
 
 
 
-export default function Navbar({ isAuthenticated }) {
+export default function Navbar({ isAuthenticated, onLogout}) {
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -54,10 +54,8 @@ export default function Navbar({ isAuthenticated }) {
 
               {isAuthenticated && (
                 <>
-                  <a href="/signin" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
-                    <FontAwesomeIcon icon={faSignInAlt} className="mr-1" /> Sign In
-                  </a>
-                  <a href="/signout" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                  
+                  <a href="/signout" onClick={onLogout} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                     <FontAwesomeIcon icon={faSignOutAlt} className="mr-1" /> Sign Out
                   </a>
                 </>

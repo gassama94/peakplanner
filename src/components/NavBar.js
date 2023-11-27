@@ -1,6 +1,10 @@
 import React from 'react';
 import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignInAlt, faHome, faSignOutAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+
+
 
 export default function Navbar({ isAuthenticated }) {
   return (
@@ -29,17 +33,39 @@ export default function Navbar({ isAuthenticated }) {
                     alt="Workflow"
                   />
                 </div>
+
                 <div className="hidden sm:block sm:ml-6">
-                  <div className="flex space-x-4">
-                    {/* Navigation links */}
-                    <a href="/" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                    {isAuthenticated ? (
-                      <a href="/signin" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sign In</a>
-                    ) : (
-                      <a href="/signup" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sign Up</a>
-                    )}
-                  </div>
-                </div>
+            <div className="flex space-x-4">
+              {/* Navigation links */}
+              <a href="/" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ">
+              <FontAwesomeIcon icon={faHome} className="mr-1" />Home
+                </a>
+
+              {!isAuthenticated && (
+                <>
+                  <a href="/signin" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                    <FontAwesomeIcon icon={faSignInAlt} className="mr-1" /> Sign In
+                  </a>
+                  <a href="/signup" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                    <FontAwesomeIcon icon={faUserPlus} className="mr-1" /> Sign Up
+                  </a>
+                </>
+              )}
+
+              {isAuthenticated && (
+                <>
+                  <a href="/signin" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                    <FontAwesomeIcon icon={faSignInAlt} className="mr-1" /> Sign In
+                  </a>
+                  <a href="/signout" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                    <FontAwesomeIcon icon={faSignOutAlt} className="mr-1" /> Sign Out
+                  </a>
+                </>
+              )}
+            </div>
+          </div>
+
+
               </div>
             </div>
           </div>

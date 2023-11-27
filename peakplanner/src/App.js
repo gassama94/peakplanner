@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import './App.css';
+import NavBar from './components/NavBar.js';
+import SignInForm from './pages/auth/SignInForm';
+import ProjectManagement from './components/ProjectManagement';
 import NoProjectSelected from './components/NoProjectSelected.js';
+import { Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter as Router } from 'react-router-dom';
 import ProjectsSidebar from './components/ProjectsSidebar.js';
 import NewProject from './components/NewProject';
 import SelectedProject from './components/SelectedProject.js';
@@ -11,6 +16,22 @@ function App() {
     projects: [],
     tasks: [],
   });
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // State for authentication status
+
+  // Simulate a login action
+  const handleLogin = () => {
+    // In a real app, you'd make an API call here
+    setIsAuthenticated(true);
+};
+
+// Handle logout action
+const handleLogout = () => {
+    // In a real app, you might also inform the backend about the logout
+    setIsAuthenticated(false);
+};
+
+
 
   function handleAddTask(text){
     setProjectsState((prevState) => {
@@ -121,7 +142,32 @@ function handleCancelAddProject(){
     content = <NoProjectSelected onStartAddProject={handleStartAddProject} />;
   }
   return (
+
+
+<div>
+  <div>
+
+<Router>
+      <NavBar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+      <Switch>
+        <Route exact path="/">
+          {isAuthenticated ? <Redirect to="/projects" /> : <Redirect to="/signin" />}
+        </Route>
+        <Route path="/signin">
+          {isAuthenticated ? <Redirect to="/projects" /> : <SignInForm onLogin={handleLogin} />}
+        </Route>
+        <Route path="/projects">
+          {isAuthenticated ? <ProjectManagement /> : <Redirect to="/signin" />}
+        </Route>
+        {/* ... other routes ... */}
+      </Switch>
+    </Router>
+  </div>
+
     <main className='h-screen my-8 flex gap-8'>
+    <NavBar isAuthenticated={isAuthenticated} /> {/* Navbar component */}
+
+{/* */}
 
     <ProjectsSidebar 
     onStartAddProject={handleStartAddProject}
@@ -131,6 +177,9 @@ function handleCancelAddProject(){
     />
     {content}
     </main>
+      </div>
+      
+      
   );
 }
 

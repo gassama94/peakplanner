@@ -10,6 +10,7 @@ import ProjectsSidebar from './components/ProjectsSidebar.js';
 import NewProject from './components/NewProject';
 import SelectedProject from './components/SelectedProject.js';
 import SignUpForm from './pages/auth/SignUpForm';
+import "./api/axiosDefaults";
 
 function App() {
   const [projectsState, setProjectsState] = useState({
@@ -32,7 +33,7 @@ const handleLogout = () => {
     setIsAuthenticated(false);
 };
 
-const [showSignUp, setShowSignUp] = useState(false);
+const [ setShowSignUp] = useState(false);
 
   const handleShowSignUp = () => {
     setShowSignUp(true);
@@ -168,7 +169,7 @@ function handleCancelAddProject(){
       <Switch>
         {/* Home Page Route */}
         <Route exact path="/">
-          {isAuthenticated ? <ProjectManagement /> : <Redirect to="/signin" />}
+          {isAuthenticated ? <ProjectManagement /> : <Redirect to="/" />}
         </Route>
 
         {/* Sign In Route */}
@@ -190,6 +191,7 @@ function handleCancelAddProject(){
             </>
           )}
         </Route>
+        <Route render={() => <p>Page not found!</p>} />
 
         {/* ... other routes ... */}
       </Switch>

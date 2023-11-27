@@ -6,6 +6,8 @@ import { faSignInAlt, faHome, faSignOutAlt, faUserPlus } from '@fortawesome/free
 
 
 
+
+
 export default function Navbar({ isAuthenticated, onLogout}) {
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -37,16 +39,25 @@ export default function Navbar({ isAuthenticated, onLogout}) {
                 <div className="hidden sm:block sm:ml-6">
             <div className="flex space-x-4">
               {/* Navigation links */}
-              <a href="/" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ">
+              <a 
+              href="/" 
+              activeClassName="active-class" 
+              className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ">
               <FontAwesomeIcon icon={faHome} className="mr-1" />Home
                 </a>
 
               {!isAuthenticated && (
                 <>
-                  <a href="/signin" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                  <a 
+                  href="/signin" 
+                  activeClassName="active-class" 
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                     <FontAwesomeIcon icon={faSignInAlt} className="mr-1" /> Sign In
                   </a>
-                  <a href="/signup" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                  <a 
+                  href="/signup" 
+                  activeClassName="active-class" 
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                     <FontAwesomeIcon icon={faUserPlus} className="mr-1" /> Sign Up
                   </a>
                 </>
@@ -54,8 +65,9 @@ export default function Navbar({ isAuthenticated, onLogout}) {
 
               {isAuthenticated && (
                 <>
-                  
-                  <a href="/signout" onClick={onLogout} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                  <a
+                   activeClassName="active-class" 
+                   href="/signout" onClick={onLogout} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                     <FontAwesomeIcon icon={faSignOutAlt} className="mr-1" /> Sign Out
                   </a>
                 </>
@@ -72,11 +84,27 @@ export default function Navbar({ isAuthenticated, onLogout}) {
           <Disclosure.Panel className="sm:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1">
               <Disclosure.Button as="a" href="/" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</Disclosure.Button>
-              {isAuthenticated ? (
-                <Disclosure.Button as="a" href="/signin" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Sign in</Disclosure.Button>
-              ) : (
-                <Disclosure.Button as="a" href="/signin" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Sign UP</Disclosure.Button>
-              )}
+              {!isAuthenticated && (
+                <>
+                  <Disclosure.Button as="a" href="/signin" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Sign in</Disclosure.Button>
+          
+       
+                <Disclosure.Button as="a" href="/signin" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Sign Up</Disclosure.Button>
+            
+                </>
+                )}
+                {isAuthenticated && (
+                  <>
+                    <a
+                     activeClassName="active-class" 
+                     href="/signout" onClick={onLogout} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                      <FontAwesomeIcon icon={faSignOutAlt} className="mr-1" /> Sign Out
+                    </a>
+                  </>
+                )}
+                
+  
+
             </div>
           </Disclosure.Panel>
         </>

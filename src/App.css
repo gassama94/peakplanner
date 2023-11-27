@@ -67,3 +67,9 @@
 .main-content {
   padding-top: 10px;
 }
+
+
+.active-class {
+  font-weight: bold;
+  color: #fff; /* or any other style */
+}

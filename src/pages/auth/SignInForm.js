@@ -27,7 +27,7 @@ const handleSubmit = async (event) => {
         username: signInData.username,
         password: signInData.password,
       };
-      const response = await axios.post("/dj-rest-auth/login/", signingData);
+      const response = await axios.get("/dj-rest-auth/login/", signingData);
       // Save the token to local storage
     const token = response.data.token;
     localStorage.setItem('token', token);
@@ -64,7 +64,9 @@ const handleSubmit = async (event) => {
             onChange={handleChange}
           />
         </div>
-        {errors.non_field_errors && <CustomAlert message={errors.non_field_errors} />}
+        {errors?.username?.map((error, index) => (
+  <CustomAlert key={index} message={error} />
+))}
 
         {/* Password Field */}
         <div className="mb-4">
@@ -82,7 +84,10 @@ const handleSubmit = async (event) => {
             onChange={handleChange}
           />
         </div>
-        {errors.non_field_errors && <CustomAlert message={errors.non_field_errors} />}
+        {errors?.password?.map((error, index) => (
+                    <CustomAlert key={index} message={error} />
+                  ))}
+        
 
         {/* Sign In Button */}
         <div className="flex justify-end">
@@ -90,7 +95,7 @@ const handleSubmit = async (event) => {
             type="submit"
             className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Sign In
+            Log in
           </button>
         </div>
       </form>

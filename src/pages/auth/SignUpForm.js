@@ -60,7 +60,7 @@ export default function SignUpForm() {
   return (
     <div className="flex justify-center items-center h-screen  container mx-auto px-4 ">
     <form 
-    className="w-full  bg-deep-blue rounded-md justify-center flex md={6} mx-auto max-xl"
+    className="w-full max-w-md  bg-deep-blue rounded-md justify-center flex md={6} mx-auto max-xl"
     onSubmit={handleSubmit}>
 
       <div className="space-y-12">

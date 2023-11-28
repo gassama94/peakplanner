@@ -44,19 +44,17 @@ export default function SignUpForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("/dj-rest-auth/registration/", signUpData);
+      const registrationData = {
+        username: signUpData.username,
+        password1: signUpData.password1,
+        password2: signUpData.password2
+    };
+      await axios.post("/dj-rest-auth/registration/", registrationData);
       history.push("/signin");
     } catch (err) {
       setErrors(err.response?.data);
-      //setErrors({
-        //username: errorData.username || [],
-        //password1: errorData.password1 || [],
-        //password2: errorData.password2 || [],
-      //});
-      
-      //setErrors({ ...errors, username: "Invalid username" });
 
-      // console.log(err.response?.data);
+      console.log(err.response?.data);
     }
   };
   return (

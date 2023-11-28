@@ -26,7 +26,7 @@ export default function SignUpForm() {
   });
   useEffect(() => {
     setErrors({
-      username: ["Test error"],
+      username: [],
       password1: [],
       password2: [],
     });

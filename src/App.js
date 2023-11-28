@@ -2,9 +2,8 @@ import { useState } from 'react';
 import './App.css';
 import NavBar from './components/NavBar.js';
 import SignInForm from './pages/auth/SignInForm';
-import ProjectManagement from './components/ProjectManagement';
 import NoProjectSelected from './components/NoProjectSelected.js';
-import { Route, Switch, Redirect, useLocation} from "react-router-dom";
+import { Route, Switch, Redirect} from "react-router-dom";
 import { BrowserRouter as Router } from 'react-router-dom';
 import ProjectsSidebar from './components/ProjectsSidebar.js';
 import NewProject from './components/NewProject';
@@ -44,8 +43,8 @@ const [ setShowSignUp] = useState(false);
   };
 
 
-  const location = useLocation(); // Get the current location
-  const isAuthPage = location.pathname === '/signin' || location.pathname === '/signup';
+  //const location = useLocation(); // Get the current location
+  //const isAuthPage = location.pathname === '/signin' || location.pathname === '/signup';
 
 
   function handleAddTask(text){
@@ -157,21 +156,30 @@ function handleCancelAddProject(){
     content = <NoProjectSelected onStartAddProject={handleStartAddProject} />;
   }
   return (
-    
-    
 
-
+    
 <div>
-
-
   <Router>
       <NavBar isAuthenticated={isAuthenticated} onLogout={handleLogout} onSignUpClick={handleShowSignUp} />
       <Switch>
         {/* Home Page Route */}
         <Route exact path="/">
-          {isAuthenticated ? <ProjectManagement /> : <Redirect to="/" />}
-        </Route>
+          {isAuthenticated ? (
+    <main className='h-screen my-8 flex gap-8'>
+  <ProjectsSidebar 
+    onStartAddProject={handleStartAddProject}
+    projects={projectsState.projects}
+    onSelectProject={handleSelectProject}
+    selectedProjectId={projectsState.selectedProjectId}
+    />
+    {content}
+    </main> 
+    ) : (
+        <Redirect to="signin"/>
 
+        )}
+
+          </Route>
         {/* Sign In Route */}
         <Route exact path="/signin">
           {isAuthenticated ? <Redirect to="/" /> : (
@@ -191,28 +199,13 @@ function handleCancelAddProject(){
             </>
           )}
         </Route>
+
         <Route render={() => <p>Page not found!</p>} />
 
         {/* ... other routes ... */}
       </Switch>
     </Router>
 
-
-
-
-{/* */}
-
-{!isAuthPage && (
-    <main className='h-screen my-8 flex gap-8'>
-  <ProjectsSidebar 
-    onStartAddProject={handleStartAddProject}
-    projects={projectsState.projects}
-    onSelectProject={handleSelectProject}
-    selectedProjectId={projectsState.selectedProjectId}
-    />
-    {content}
-    </main>
-)}
       </div>   
   );
 }

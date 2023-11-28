@@ -20,20 +20,27 @@ export default function SignInForm() {
       [event.target.name]: event.target.value,
     });
   };
-
-  const handleSubmit = async (event) => {
+const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const signingData = {
         username: signInData.username,
         password: signInData.password,
       };
-     await axios.post("/dj-rest-auth/login/", signingData);
+      const response = await axios.post("/dj-rest-auth/login/", signingData);
+      // Save the token to local storage
+    const token = response.data.token;
+    localStorage.setItem('token', token);
+    
+    // Set the token in the global headers for future requests
+    axios.defaults.headers.common['Authorization'] = `Bearer ${'54b8ebb1af8b1cbb8c33666bded395b781d68830'}`;
+
       history.push("/"); // Redirect to a different path if needed
     } catch (err) {
       setErrors(err.response?.data);
     }
   };
+  
 
   return (
     <div className="flex justify-center items-center h-screen max-xl">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import CustomAlert from '../../components/CustomAlert';
@@ -20,11 +20,18 @@ export default function SignUpForm() {
 
   const [ errors, setErrors] = useState({
     username: [],
-  password1: [],
-  password2: [],
+    password1: [],
+    password2: [],
     
   });
-
+  useEffect(() => {
+    setErrors({
+      username: ["Test error"],
+      password1: [],
+      password2: [],
+    });
+  }, []);
+  
   const history = useHistory();
 
   const handleChange = (event) => {
@@ -78,9 +85,11 @@ export default function SignUpForm() {
                   onChange={handleChange}
                 />
               </div>
-              {errors.username && errors.username.map((error, index) => (
+              
+{errors?.username?.map((error, index) => (
   <CustomAlert key={index} message={error} />
 ))}
+
 
               
             </div>
@@ -100,12 +109,11 @@ export default function SignUpForm() {
                   placeholder="••••••••"
                   value={password1}
                   onChange={handleChange}
-                />
+                  />
               </div>
-              {errors.password1 && errors.password1.map((error, index) => (
-  <CustomAlert key={index} message={error} />
-))}
-
+                  {errors?.password1?.map((error, index) => (
+                    <CustomAlert key={index} message={error} />
+                  ))}
               
             </div>
             
@@ -127,11 +135,13 @@ export default function SignUpForm() {
                   placeholder="••••••••"
                   value={password2}
                   onChange={handleChange}
-                />
+                  />
               </div>
-              {errors.password2 && errors.password2.map((error, index) => (
-  <CustomAlert key={index} message={error} />
-))}
+                  {errors?.password2?.map((error, index) => (
+                    <CustomAlert key={index} message={error} />
+                  ))}
+              
+              
 
             </div>
 

@@ -1,4 +1,4 @@
-import React, { useState, response } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import CustomAlert from '../../components/CustomAlert';
@@ -24,7 +24,7 @@ export default function SignInForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("/dj-rest-auth/login/", signInData);
+      const response = await axios.post("/dj-rest-auth/login/", signInData);
       // Assuming the token is returned in the response
     localStorage.setItem('authToken', response.data.token);
       history.push("/"); // Redirect to a different path if needed

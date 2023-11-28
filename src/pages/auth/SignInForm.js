@@ -24,7 +24,11 @@ export default function SignInForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("/dj-rest-auth/login/", signInData);
+      const signingData = {
+        username: signInData.username,
+        password: signInData.password,
+      };
+      const response = await axios.post("/dj-rest-auth/login/", signingData);
       // Assuming the token is returned in the response
     localStorage.setItem('authToken', response.data.token);
       history.push("/"); // Redirect to a different path if needed

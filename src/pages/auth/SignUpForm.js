@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import CustomAlert from '../../components/CustomAlert';
+
+
+
+
+
 
 
 
@@ -12,7 +18,12 @@ export default function SignUpForm() {
   });
   const { username, password1, password2 } = signUpData;
 
-  // const [errors, setErrors] = useState({});
+  const [ errors, setErrors] = useState({
+    username: [],
+  password1: [],
+  password2: [],
+    
+  });
 
   const history = useHistory();
 
@@ -29,14 +40,24 @@ export default function SignUpForm() {
       await axios.post("/dj-rest-auth/registration/", signUpData);
       history.push("/signin");
     } catch (err) {
-      //setErrors(err.response?.data);
+      setErrors(err.response?.data);
+      //setErrors({
+        //username: errorData.username || [],
+        //password1: errorData.password1 || [],
+        //password2: errorData.password2 || [],
+      //});
+      
+      //setErrors({ ...errors, username: "Invalid username" });
+
+      // console.log(err.response?.data);
     }
   };
   return (
-    <div className="flex justify-center items-center h-screen max-xl container mx-auto px-4">
+    <div className="flex justify-center items-center h-screen  container mx-auto px-4 ">
     <form 
-    className="w-full max-w-lg bg-deep-blue rounded-md justify-center flex md={6}"
+    className="w-full  bg-deep-blue rounded-md justify-center flex md={6} mx-auto max-xl"
     onSubmit={handleSubmit}>
+
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -57,8 +78,13 @@ export default function SignUpForm() {
                   onChange={handleChange}
                 />
               </div>
-            </div>
+              {errors.username && errors.username.map((error, index) => (
+  <CustomAlert key={index} message={error} />
+))}
 
+              
+            </div>
+             
             {/* Password Field */}
             <div className="sm:col-span-4">
               <label htmlFor="password1" className="block text-sm font-medium leading-6 text-gray-200">
@@ -76,7 +102,15 @@ export default function SignUpForm() {
                   onChange={handleChange}
                 />
               </div>
+              {errors.password1 && errors.password1.map((error, index) => (
+  <CustomAlert key={index} message={error} />
+))}
+
+              
             </div>
+            
+
+          
 
             {/* Confirm Password Field */}
             <div className="sm:col-span-4">
@@ -95,7 +129,16 @@ export default function SignUpForm() {
                   onChange={handleChange}
                 />
               </div>
+              {errors.password2 && errors.password2.map((error, index) => (
+  <CustomAlert key={index} message={error} />
+))}
+
             </div>
+
+            {/* Display error alert for password2 */}
+            {/* Display error alert for password2 */}
+
+
           </div>
         </div>
       </div>

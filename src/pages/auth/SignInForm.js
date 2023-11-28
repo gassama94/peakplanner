@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, response } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import CustomAlert from '../../components/CustomAlert';
 
 export default function SignInForm() {
   const [signInData, setSignInData] = useState({
@@ -9,7 +10,7 @@ export default function SignInForm() {
   });
   const { username, password } = signInData;
 
-  // const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});
 
   const history = useHistory();
 
@@ -24,9 +25,11 @@ export default function SignInForm() {
     event.preventDefault();
     try {
       await axios.post("/dj-rest-auth/login/", signInData);
-      history.push("/projects"); // Redirect to a different path if needed
+      // Assuming the token is returned in the response
+    localStorage.setItem('authToken', response.data.token);
+      history.push("/"); // Redirect to a different path if needed
     } catch (err) {
-      // setErrors(err.response?.data);
+      setErrors(err.response?.data);
     }
   };
 
@@ -52,6 +55,7 @@ export default function SignInForm() {
             onChange={handleChange}
           />
         </div>
+        {errors.non_field_errors && <CustomAlert message={errors.non_field_errors} />}
 
         {/* Password Field */}
         <div className="mb-4">
@@ -69,6 +73,7 @@ export default function SignInForm() {
             onChange={handleChange}
           />
         </div>
+        {errors.non_field_errors && <CustomAlert message={errors.non_field_errors} />}
 
         {/* Sign In Button */}
         <div className="flex justify-end">

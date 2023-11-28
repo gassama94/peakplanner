@@ -173,7 +173,7 @@ function handleCancelAddProject(){
         </Route>
 
         {/* Sign In Route */}
-        <Route path="/signin">
+        <Route exact path="/signin">
           {isAuthenticated ? <Redirect to="/" /> : (
             <>
               <h1>Sign In</h1>
@@ -183,7 +183,7 @@ function handleCancelAddProject(){
         </Route>
 
         {/* Sign Up Route */}
-        <Route path="/signup">
+        <Route exact path="/signup">
           {isAuthenticated ? <Redirect to="/" /> : (
             <>
               <h1>Sign Up</h1>

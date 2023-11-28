@@ -41,7 +41,6 @@ export default function Navbar({ isAuthenticated, onLogout}) {
               {/* Navigation links */}
               <a 
               href="/" 
-              activeClassName="active-class" 
               className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium ">
               <FontAwesomeIcon icon={faHome} className="mr-1" />Home
                 </a>
@@ -50,13 +49,11 @@ export default function Navbar({ isAuthenticated, onLogout}) {
                 <>
                   <a 
                   href="/signin" 
-                  activeClassName="active-class" 
                   className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                     <FontAwesomeIcon icon={faSignInAlt} className="mr-1" /> Sign In
                   </a>
                   <a 
                   href="/signup" 
-                  activeClassName="active-class" 
                   className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                     <FontAwesomeIcon icon={faUserPlus} className="mr-1" /> Sign Up
                   </a>
@@ -66,7 +63,6 @@ export default function Navbar({ isAuthenticated, onLogout}) {
               {isAuthenticated && (
                 <>
                   <a
-                   activeClassName="active-class" 
                    href="/signout" onClick={onLogout} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                     <FontAwesomeIcon icon={faSignOutAlt} className="mr-1" /> Sign Out
                   </a>
@@ -96,7 +92,6 @@ export default function Navbar({ isAuthenticated, onLogout}) {
                 {isAuthenticated && (
                   <>
                     <a
-                     activeClassName="active-class" 
                      href="/signout" onClick={onLogout} className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                       <FontAwesomeIcon icon={faSignOutAlt} className="mr-1" /> Sign Out
                     </a>
